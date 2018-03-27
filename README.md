@@ -1,3 +1,5 @@
+# Source: https://github.com/ionic-team/stencil-app-starter
+
 # Stencil App Starter
 
 Stencil is a compiler for building fast web apps using Web Components.

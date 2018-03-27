@@ -2,7 +2,7 @@
 <html dir="ltr" lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Stencil Starter App</title>
+  <title>Advanced-Sheets</title>
   <meta name="Description" content="Welcome to the Stencil App Starter. You can use this starter to build entire apps all with web components using Stencil!">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
   <meta name="theme-color" content="#16161d">
@@ -12,13 +12,32 @@
 
   <script src="/build/app.js"></script>
 
-  <link rel="apple-touch-icon" href="/assets/icon/icon.png">
-  <link rel="icon" type="image/x-icon" href="/assets/icon/favicon.ico">
   <link rel="manifest" href="/manifest.json">
 </head>
 <body>
+  <advanced-sheet></advanced-sheet>
 
-  <my-app></my-app>
+
+  <script type="text/javascript">
+    /*
+    document.querySelector('advanced-sheet').whenDefined(() => console.log('this is loaded'));
+    document.addEventListener('loaded',function(){
+      let sheet = document.getElementByTagName(advanced-sheet)[0]
+      console.log(sheet)
+      sheet.data = {"data":[{"_id":"OM","volume":391.1,"color":[0,255,0],"complete_name":"n-Octyl-β-D-Maltopyranoside","molecular_formula":"C20H38O11","molecular_mass":454.4,"CMC":19.5,"aggregation_number":47,"ref":"Anatrace measurement in collaboration with Professor R. M. Garavito (Michigan State University)","PDB_file":"OM.pdb","SMILES":"CCCCCCCCOC1C(C(C(C(O1)CO)OC2C(C(C(C(O2)CO)O)O)O)O)O","category":"maltosides"}]}
+    
+
+    })
+    */
+    customElements.whenDefined('advanced-sheet').then(function(){
+      let sheet = document.getElementsByTagName('advanced-sheet')[0]
+      sheet.data = {"data":[{"_id":"OM","volume":391.1,"color":[0,255,0],"complete_name":"n-Octyl-β-D-Maltopyranoside","molecular_formula":"C20H38O11","molecular_mass":454.4,"CMC":19.5,"aggregation_number":47,"ref":"Anatrace measurement in collaboration with Professor R. M. Garavito (Michigan State University)","PDB_file":"OM.pdb","SMILES":"CCCCCCCCOC1C(C(C(C(O1)CO)OC2C(C(C(C(O2)CO)O)O)O)O)O","category":"maltosides"}]};
+      console.log("component ready")
+    })
+
+
+  </script>
+
 
   <style>
     body {

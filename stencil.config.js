@@ -1,4 +1,7 @@
 exports.config = {
+	bundles:[
+	{components :['advanced-sheet']}
+	],
 };
 
 exports.devServer = {
