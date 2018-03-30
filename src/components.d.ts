@@ -15,6 +15,36 @@ declare global {
 
 
 import {
+  AdvancedSheetHandler as AdvancedSheetHandler
+} from './components/advanced-sheet-handler/advanced-sheet-handler';
+
+declare global {
+  interface HTMLAdvancedSheetHandlerElement extends AdvancedSheetHandler, HTMLStencilElement {
+  }
+  var HTMLAdvancedSheetHandlerElement: {
+    prototype: HTMLAdvancedSheetHandlerElement;
+    new (): HTMLAdvancedSheetHandlerElement;
+  };
+  interface HTMLElementTagNameMap {
+    "advanced-sheet-handler": HTMLAdvancedSheetHandlerElement;
+  }
+  interface ElementTagNameMap {
+    "advanced-sheet-handler": HTMLAdvancedSheetHandlerElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "advanced-sheet-handler": JSXElements.AdvancedSheetHandlerAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface AdvancedSheetHandlerAttributes extends HTMLAttributes {
+      max_window?: number;
+    }
+  }
+}
+
+
+import {
   AdvancedSheet as AdvancedSheet
 } from './components/advanced-sheet/advanced-sheet';
 

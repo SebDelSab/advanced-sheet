@@ -1,54 +1,81 @@
-# Source: https://github.com/ionic-team/stencil-app-starter
+# Advanced-sheet-handler
 
-# Stencil App Starter
-
-Stencil is a compiler for building fast web apps using Web Components.
-
-Stencil combines the best concepts of the most popular frontend frameworks into a compile-time rather than run-time tool.  Stencil takes TypeScript, JSX, a tiny virtual DOM layer, efficient one-way data binding, an asynchronous rendering pipeline (similar to React Fiber), and lazy-loading out of the box, and generates 100% standards-based Web Components that run in any browser supporting the Custom Elements v1 spec.
-
-Stencil components are just Web Components, so they work in any major framework or with no framework at all. In many cases, Stencil can be used as a drop in replacement for traditional frontend frameworks given the capabilities now available in the browser, though using it as such is certainly not required.
-
-Stencil also enables a number of key capabilities on top of Web Components, in particular Server Side Rendering (SSR) without the need to run a headless browser, pre-rendering, and objects-as-properties (instead of just strings).
+Advanced-sheet is a web-component that was developped using Stencil (v0.6.1), a web-component compiler developped by the ionic team. 
+You can find a link to know how to do some [here](https://stenciljs.com/)
 
 ## Getting Started
 
-To start a new project using Stencil, clone this repo to a new directory:
+To install this web-component just run
 
 ```bash
-git clone https://github.com/ionic-team/stencil-starter.git my-app
-cd my-app
-git remote rm origin
-```
 
-and run:
-
-```bash
-npm install
-npm start
-```
-
-To view the build, start an HTTP server inside of the `/www` directory.
-
-To watch for file changes during development, run:
-
-```bash
-npm run dev
-```
-
-To build the app for production, run:
-
-```bash
-npm run build
-```
-
-To run the unit tests once, run:
+npm install advanced-sheet-handler
 
 ```
-npm test
+
+## Example of use
+
+In your HTML file, place the script reference inside your header in order to be able to use this package. NB: The font-awesome link is currently necessary if you want to see the spinner during your search.
+
+
+```html
+
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+```  
+
+Then you can paste this anywhere in your code where a HTML element can be placed:
+
+```html
+
+<advanced-sheet-handler></advanced-sheet-handler>
+
 ```
 
-To run the unit tests and watch for file changes during development, run:
+## Accessible events and properties
+
+Some properties and methods are provided. More will probably be added in the future
+
+
+### Properties 
+
+#### .data
+
+The data property is the main entry point to the component. The component include another component named "advanced-sheet" that has this data property. Your data must be provided in this particular format:
+
+```javascript
+
+{"data":[{"_id":"something","key2": "example", "key3": "example2"}]}
 
 ```
-npm run test.watch
+
+"data" and "\_id" are mandatory parameters
+The data format will be improved in a next release
+
+
+### Events
+
+Once the advanced-sheet is loaded, the event sheetLoaded is emitted. Once it is emited, you can pass data to the component.
+During developpement we used it like this:
+
+```html
+
+<script>
+
+	document.addEventListener('sheetLoaded',function(){
+		let sheet = document.getElementsByTagName('advanced-sheet')[0];
+    	sheet.data = {"data":[{"_id":"little_bird", "name": "titi", "color":"yellow"}]};
+	})
+
+</script>
+
 ```
+
+## Release notes
+
+v 0.0.1
+
+Prototype of the advanced-sheet-handler component

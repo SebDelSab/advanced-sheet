@@ -1,6 +1,6 @@
 exports.config = {
 	bundles:[
-	{components :['advanced-sheet']}
+	{components :['advanced-sheet','advanced-sheet-handler']},
 	],
 };
 
