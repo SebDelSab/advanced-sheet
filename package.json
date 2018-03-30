@@ -1,6 +1,9 @@
 {
   "name": "advanced-sheet-handler",
-  "private": true,
+  "main":"dist/advanced-sheet-handler.js",
+  "types":"dist/types/components.d.ts",
+  "collection":"dist/collection/collection-manifest.json",
+  "private": false,
   "version": "0.0.1",
   "description": "prototype for advanced-sheet-handler",
   "files": [
