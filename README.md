@@ -23,6 +23,7 @@ In your HTML file, place the script reference inside your header in order to be 
 <head>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <script src='modules/advanced-sheet-handler/dist/advanced-sheet-handler.js'></script>
 </head>
 
 ```  
@@ -79,3 +80,4 @@ During developpement we used it like this:
 v 0.0.1
 
 Prototype of the advanced-sheet-handler component
+
