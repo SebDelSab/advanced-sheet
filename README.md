@@ -22,7 +22,7 @@ In your HTML file, place the script reference inside your header in order to be 
 
 <head>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" crossorigin="anonymous">
   <script src='modules/advanced-sheet-handler/dist/advanced-sheet-handler.js'></script>
 </head>
 
@@ -81,7 +81,7 @@ v0.0.1 -> v0.0.2
 
 Prototype of the advanced-sheet-handler component
 
-v0.0.3
+v0.0.3 -> v0.0.4
 
 Component compatible with bootstrap version 3.3.7
 

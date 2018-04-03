@@ -1,7 +1,7 @@
 exports.config = {
-	//namespace: 'advanced-sheet-handler',
-	//generateDistribution: true,
-	generateWWW: true,
+	namespace: 'advanced-sheet-handler',
+	generateDistribution: true,
+	generateWWW: false,
 	bundles:[
 	{components :['advanced-sheet','advanced-sheet-handler']},
 	],
