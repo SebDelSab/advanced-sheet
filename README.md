@@ -77,7 +77,11 @@ During developpement we used it like this:
 
 ## Release notes
 
-v 0.0.1
+v0.0.1 -> v0.0.2
 
 Prototype of the advanced-sheet-handler component
+
+v0.0.3
+
+Component compatible with bootstrap version 3.3.7
 

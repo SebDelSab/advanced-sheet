@@ -29,8 +29,10 @@ export class AdvancedSheetHandler{
 			for (let i=0; i< actives.length; i++){
 				actives[i].classList.remove('active')
 			}
+			let li = document.createElement('li');
 			let update = document.createElement('a');
-			update.className = "nav-item nav-link active "
+			update["data-toggle"]="tab"
+			li.className = "active "
 			update.text = data.detail.id
 			update.addEventListener('click',function(event){
 				for (let i=0; i< actives.length; i++){
@@ -38,9 +40,10 @@ export class AdvancedSheetHandler{
 				}
 				let sheet = document.getElementsByTagName('advanced-sheet')[0]
 				sheet.data = {'data':[self.catalog[update.text]]}
-				event.target["classList"].add('active');
+				event.target["parentNode"]["classList"].add('active')
 			})
-			to_update.appendChild(update)
+			li.appendChild(update)
+			to_update.appendChild(li)
 			this.catalog[data.detail.id]= data.detail.data;			
 			this.catalog = {...this.catalog};
 		}
@@ -66,10 +69,10 @@ export class AdvancedSheetHandler{
 		return(
 			<div class="sheetHandler">
 			<nav>
-				<div class="nav nav-tabs allDetHeader" role="tablist" id="DetNavBar">
+				<ul class="nav nav-tabs allDetHeader" >
 					<i class="paginate nav-link fa fa-angle-double-left allDetheader-left-arrow"></i>
 					<i class="paginate nav-link fa fa-angle-double-right allDetheader-right-arrow"></i>
-				</div>
+				</ul>
 			</nav>
     		<div class="tab-content allDetBody" id="DetContent"><advanced-sheet></advanced-sheet></div>
     		</div>

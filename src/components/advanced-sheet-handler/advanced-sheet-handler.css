@@ -1,11 +1,11 @@
-div.sheetHandler div.allDetHeader i.fa-angle-double-left{
+div.sheetHandler ul.allDetHeader i.fa-angle-double-left{
 	font-size: 1.5em;
     padding-top: 0.25em;
     margin-right: 0.5em;
 	display: none;
 }
 
-div.sheetHandler div.allDetHeader i.fa-angle-double-right{
+div.sheetHandler ul.allDetHeader i.fa-angle-double-right{
 	font-size: 1.5em;
     padding-top: 0.25em;
     margin-left: 0.5em; 
