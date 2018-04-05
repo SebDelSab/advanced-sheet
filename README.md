@@ -56,6 +56,9 @@ The data property is the main entry point to the component. The component includ
 "data" and "\_id" are mandatory parameters
 The data format will be improved in a next release
 
+#### .pdbFile
+
+By modifying the advanced-sheet pdbFile property you can see your molecule thanks to ngl. This property must be a string (representing the url to your pdb file)
 
 ### Events
 
@@ -84,4 +87,8 @@ Prototype of the advanced-sheet-handler component
 v0.0.3 -> v0.0.4
 
 Component compatible with bootstrap version 3.3.7
+
+v0.1.0
+
+ngl dependency added, we can see view pdb files by modifying the .pdbFile property.
 

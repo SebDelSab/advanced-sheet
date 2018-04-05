@@ -11,3 +11,7 @@ div.sheetHandler ul.allDetHeader i.fa-angle-double-right{
     margin-left: 0.5em; 
 	display: none;
 }
+
+div.sheetHandler div.sheet-content div.nglView {
+	width:50%;
+}

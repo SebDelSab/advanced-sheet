@@ -14,6 +14,7 @@ import {
 
 export class AdvancedSheetHandler{
 
+	@Prop() pdbFile: string;
 	@State() catalog = {};
 	@Prop() max_window = 3;
 	@Element() host: HTMLElement;
@@ -40,11 +41,14 @@ export class AdvancedSheetHandler{
 				}
 				let sheet = document.getElementsByTagName('advanced-sheet')[0]
 				sheet.data = {'data':[self.catalog[update.text]]}
+				sheet.pdbFile = self.catalog[update.text]["pdbFile"];
 				event.target["parentNode"]["classList"].add('active')
+
 			})
 			li.appendChild(update)
 			to_update.appendChild(li)
-			this.catalog[data.detail.id]= data.detail.data;			
+			this.catalog[data.detail.id]= data.detail.data;
+			this.catalog[data.detail.id]["pdbFile"]=data.detail.pdbFile			
 			this.catalog = {...this.catalog};
 		}
 		else{
@@ -52,6 +56,9 @@ export class AdvancedSheetHandler{
 			sheet.data = {'data':[self.catalog[data.detail.text]]}
 		}
 	}
+
+
+
 
 	/*
 	@Watch('catalog')

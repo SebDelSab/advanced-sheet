@@ -4,7 +4,7 @@
   "types":"dist/types/components.d.ts",
   "collection":"dist/collection/collection-manifest.json",
   "private": false,
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "prototype for advanced-sheet-handler",
   "files": [
     "dist/"
@@ -36,6 +36,13 @@
   "bugs": {
     "url": "https://github.com/SebDelSab/advanced-sheet"
   },
+  "keywords": [
+    "javascript",
+    "Stencil",
+    "web-components",
+    "ngl",
+    "molecular structure"
+  ],
   "homepage": "https://github.com/SebDelSab/advanced-sheet",
   "jest": {
     "transform": {
