@@ -30,26 +30,37 @@ export class AdvancedSheet{
   		let self = this;
   		let elem = this.host.getElementsByClassName("nglView")[0];
   		while (elem.firstChild) {
+  		  	let canvas = this.host.getElementsByTagName('canvas')[0];
+  		  	console.dir(canvas)
+			let gl = canvas.getContext('webgl');
+			gl.getExtension('WEBGL_lose_context').loseContext();
+			gl = undefined;		
     		elem.removeChild(elem.firstChild);
 		}
 		elem["style"]="height:"+height+"px;";
-  		let stage = new window["NGL"].Stage( elem, { backgroundColor: "lightgrey"} );  			
+  		let stage = new window["NGL"].Stage( elem, { backgroundColor: "lightgrey"} );
+  		
+    //   .getExtension('WEBGL_lose_context').loseContext(); 			
   		stage.loadFile(self.pdbFile).then(function(component){
   			stage.handleResize()
+  			//console.log(stage.viewer.renderer)
   			component.addRepresentation("ball+stick");
   			component.autoView();
   		})
+
   	}
 
 	render(){
 
 		let row = []
-		if (Object.keys(this.data).length >0){ 					// Because the data are loaded after the component is loaded for the first time 
+		if (Object.keys(this.data).length >0){ 			// Because the data are loaded after the component is loaded for the first time 
 
 			let properties = this.data["data"][0]
 			let keys = Object.keys(properties)
 			row = keys.map((e) => {
-				return <tr><td>{e}</td><td>{properties[e]}</td></tr>
+				if(e != "pdbFile"){
+					return <tr><td>{e}</td><td>{properties[e]}</td></tr>
+				}
 			})
 
 			this.dataDisplayed.emit({"id":properties["_id"],"data":properties,"pdbFile":this.pdbFile})

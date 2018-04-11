@@ -92,3 +92,7 @@ v0.1.0
 
 ngl dependency added, we can see view pdb files by modifying the .pdbFile property.
 
+v0.1.1
+
+try to allow to have multiple ngl view
+
