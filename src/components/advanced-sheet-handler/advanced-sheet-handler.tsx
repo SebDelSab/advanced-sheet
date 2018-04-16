@@ -4,7 +4,6 @@ import {
 		Element, 
 		Listen, 
 		State, 
-		//Watch 
 		} from '@stencil/core';
 
 @Component({
@@ -19,6 +18,7 @@ export class AdvancedSheetHandler{
 	@Prop() max_window = 3;
 	@Element() host: HTMLElement;
 	visible_start = 0;
+	@Prop() nglview: boolean;
 
 
 	@Listen('dataDisplayed')
@@ -55,20 +55,35 @@ export class AdvancedSheetHandler{
 			let sheet = document.getElementsByTagName('advanced-sheet')[0]
 			sheet.data = {'data':[self.catalog[data.detail.text]]}
 		}
+		//this.createView(data.detail.pdbFile)
 	}
 
+	@Listen('buildView')
+	createView(data){
+  		if(this.nglview){
+  			let elem = this.host.getElementsByClassName("nglView")[0];
+  			elem["style"]="height:"+data.detail.tableHeight+"px;";
+			let nglView = elem.getElementsByTagName("canvas");
+			if(nglView.length === 0){
+  				window["stage"] = new window["NGL"].Stage( elem, { backgroundColor: "lightgrey"} );		
+  				window["stage"].loadFile(data.detail.file).then(function(component){
+  					window["stage"].handleResize()
+  					component.addRepresentation("ball+stick");
+  					component.autoView();
+  				})
+  			}
+  			else{
+  				window["stage"].removeAllComponents()
+  				window["stage"].loadFile(data.detail.file).then(function(component){
+  					window["stage"].handleResize()
+  					component.addRepresentation("ball+stick");
+  					component.autoView();
+  				})
+				
+  			}
+  		}
+  	}
 
-
-
-	/*
-	@Watch('catalog')
-	displayArrows(){
-		if(Object.keys(this.catalog).length > this.max_window){
-			let left_arrow = this.host.getElementsByClassName('allDetheader-left-arrow')[0]
-			left_arrow["style"].display = "block";
-		}
-	}
-	*/
 
 
 	render(){
@@ -81,7 +96,8 @@ export class AdvancedSheetHandler{
 					<i class="paginate nav-link fa fa-angle-double-right allDetheader-right-arrow"></i>
 				</ul>
 			</nav>
-    		<div class="tab-content allDetBody" id="DetContent"><advanced-sheet></advanced-sheet></div>
+    		<div class="tab-content allDetBody col-md-6" id="DetContent"><advanced-sheet></advanced-sheet></div>
+    		<div class="nglView col-md-6"></div>
     		</div>
 		);
 	}

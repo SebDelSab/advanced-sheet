@@ -1,4 +1,4 @@
-import { Component, Prop, Element, Event, EventEmitter} from '@stencil/core';
+import { Component, Prop, Event, EventEmitter, Element} from '@stencil/core';
 //import * as nglLib from 'ngl/ngl';
 @Component({
 	tag:'advanced-sheet',
@@ -9,9 +9,11 @@ export class AdvancedSheet{
 
 	@Prop() data :object = {};
 	@Prop() pdbFile: string ;
-	@Element() host: HTMLElement;
 	@Event() sheetLoaded: EventEmitter;
 	@Event() dataDisplayed: EventEmitter;
+	@Event() buildView: EventEmitter;
+	@Element() host: HTMLElement;
+	
 
 	componentDidLoad() {
     	this.sheetLoaded.emit()
@@ -21,10 +23,13 @@ export class AdvancedSheet{
   		//console.log(this.pdbFile)
   		let table = this.host.getElementsByClassName('infos')[0]
   		//console.log(table.clientHeight)
+  		//console.log(this.pdbFile)
+  		this.buildView.emit({"file":this.pdbFile,"tableHeight":table.clientHeight})
+  		//console.log(table.clientHeight)
   		//this.pdbFile = 
-  		this.createView(table.clientHeight)
+  		//this.createView(table.clientHeight)
   	}
-	
+	/*
   	createView(height){
   		//console.log(this.pdbFile)
   		let self = this;
@@ -34,11 +39,13 @@ export class AdvancedSheet{
   		  	console.dir(canvas)
 			let gl = canvas.getContext('webgl');
 			gl.getExtension('WEBGL_lose_context').loseContext();
-			gl = undefined;		
+			//gl = undefined;		
     		elem.removeChild(elem.firstChild);
+    		console.log(gl.isContextLost())
 		}
 		elem["style"]="height:"+height+"px;";
   		let stage = new window["NGL"].Stage( elem, { backgroundColor: "lightgrey"} );
+  		console.log(stage)
   		
     //   .getExtension('WEBGL_lose_context').loseContext(); 			
   		stage.loadFile(self.pdbFile).then(function(component){
@@ -49,6 +56,7 @@ export class AdvancedSheet{
   		})
 
   	}
+	*/
 
 	render(){
 
@@ -58,11 +66,10 @@ export class AdvancedSheet{
 			let properties = this.data["data"][0]
 			let keys = Object.keys(properties)
 			row = keys.map((e) => {
-				if(e != "pdbFile"){
 					return <tr><td>{e}</td><td>{properties[e]}</td></tr>
-				}
 			})
-
+			//let table = this.host.getElementsByClassName('infos')[0]
+			//console.log(table.clientHeight)
 			this.dataDisplayed.emit({"id":properties["_id"],"data":properties,"pdbFile":this.pdbFile})
 
   		}
@@ -70,8 +77,8 @@ export class AdvancedSheet{
 
 		return(
 			<div class= "sheet-content " >
-				<table class="infos col-md-6">{row}</table>
-				<div class="nglView col-md-6"></div>
+				<table class="infos ">{row}</table>
+				
 				
 			</div>
 		);

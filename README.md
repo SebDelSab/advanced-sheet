@@ -60,9 +60,12 @@ The data format will be improved in a next release
 
 By modifying the advanced-sheet pdbFile property you can see your molecule thanks to ngl. This property must be a string (representing the url to your pdb file)
 
+#### nglview
+
+When adding this property inside the html element, allow the component to make a ngl representation of the .pdbFile that was passed to the component 
 ### Events
 
-Once the advanced-sheet is loaded, the event sheetLoaded is emitted. Once it is emited, you can pass data to the component.
+Once the advanced-sheet is loaded, the event sheetLoaded is emitted. Once it is emited, you can pass data to the advanced-sheet component earlier.
 During developpement we used it like this:
 
 ```html
@@ -95,4 +98,9 @@ ngl dependency added, we can see view pdb files by modifying the .pdbFile proper
 v0.1.1
 
 try to allow to have multiple ngl view
+
+v0.2.0
+
+nglview property added
+Now there is only one ngl view that is updated when switching sheet. 
 
