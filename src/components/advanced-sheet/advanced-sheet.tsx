@@ -22,9 +22,10 @@ export class AdvancedSheet{
   	componentDidUpdate(){
   		//console.log(this.pdbFile)
   		let table = this.host.getElementsByClassName('infos')[0]
+  		console.dir(table)
   		//console.log(table.clientHeight)
   		//console.log(this.pdbFile)
-  		this.buildView.emit({"file":this.pdbFile,"tableHeight":table.clientHeight})
+  		this.buildView.emit({"file":this.pdbFile,"tableHeight":table.clientHeight,"tableWidth":table.clientWidth})
   		//console.log(table.clientHeight)
   		//this.pdbFile = 
   		//this.createView(table.clientHeight)
@@ -68,18 +69,12 @@ export class AdvancedSheet{
 			row = keys.map((e) => {
 					return <tr><td>{e}</td><td>{properties[e]}</td></tr>
 			})
-			//let table = this.host.getElementsByClassName('infos')[0]
-			//console.log(table.clientHeight)
 			this.dataDisplayed.emit({"id":properties["_id"],"data":properties,"pdbFile":this.pdbFile})
 
   		}
-		
-
 		return(
-			<div class= "sheet-content " >
-				<table class="infos ">{row}</table>
-				
-				
+			<div class= "sheet-content" >
+				<table class="infos ">{row}</table>		
 			</div>
 		);
 		//this.load(this.data)

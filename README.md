@@ -102,5 +102,9 @@ try to allow to have multiple ngl view
 v0.2.0
 
 nglview property added
-Now there is only one ngl view that is updated when switching sheet. 
+Now there is only one ngl view that is updated when switching sheet.
+
+v0.2.1
+
+better rendering with bootstrap  
 

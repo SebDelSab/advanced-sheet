@@ -62,7 +62,8 @@ export class AdvancedSheetHandler{
 	createView(data){
   		if(this.nglview){
   			let elem = this.host.getElementsByClassName("nglView")[0];
-  			elem["style"]="height:"+data.detail.tableHeight+"px;";
+  			console.log(data.detail.tableWidth)
+  			elem["style"]="height:"+data.detail.tableHeight+"px;width: "+data.detail.tableWidth+"px;";
 			let nglView = elem.getElementsByTagName("canvas");
 			if(nglView.length === 0){
   				window["stage"] = new window["NGL"].Stage( elem, { backgroundColor: "lightgrey"} );		
@@ -82,6 +83,7 @@ export class AdvancedSheetHandler{
 				
   			}
   		}
+
   	}
 
 
@@ -89,15 +91,15 @@ export class AdvancedSheetHandler{
 	render(){
 
 		return(
-			<div class="sheetHandler">
-			<nav>
+			<div class="sheetHandler container">
 				<ul class="nav nav-tabs allDetHeader" >
 					<i class="paginate nav-link fa fa-angle-double-left allDetheader-left-arrow"></i>
 					<i class="paginate nav-link fa fa-angle-double-right allDetheader-right-arrow"></i>
 				</ul>
-			</nav>
-    		<div class="tab-content allDetBody col-md-6" id="DetContent"><advanced-sheet></advanced-sheet></div>
-    		<div class="nglView col-md-6"></div>
+				<div class="row">
+		    		<div class="tab-content allDetBody col-xs-6 " id="DetContent"><advanced-sheet></advanced-sheet></div>
+   					<div class="nglView col-xs-6"></div>
+   				</div>
     		</div>
 		);
 	}
