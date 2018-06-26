@@ -5,12 +5,11 @@ exports.config = {
 	bundles:[
 	{components :['advanced-sheet','advanced-sheet-handler']},
 	],
-	/*
 	copy: [
 	{src: "ngl"},
-	{src: "pdb"}
+	//{src: "pdb"}
 	]
-	*/
+	
 };
 
 exports.devServer = {

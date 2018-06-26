@@ -4,3 +4,14 @@ table.infos td {
 table{
     border-collapse: collapse; /* Les bordures du tableau seront collées (plus joli) */
 }
+
+div.sheet-content table.infos tr td{
+	word-wrap: break-word;
+	width: 700px;
+}
+
+/*
+div.row{
+	display: contents;
+}
+*/

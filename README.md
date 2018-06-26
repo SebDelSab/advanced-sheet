@@ -108,3 +108,7 @@ v0.2.1
 
 better rendering with bootstrap  
 
+v0.3.0
+
+Bootstrap removed, a message is now appearing when a pdbfile is not present. The rendering should be better than in previous version.
+

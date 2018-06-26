@@ -1,8 +1,8 @@
 {
   "name": "advanced-sheet-handler",
-  "main":"dist/advanced-sheet-handler.js",
-  "types":"dist/types/components.d.ts",
-  "collection":"dist/collection/collection-manifest.json",
+  "main": "dist/advanced-sheet-handler.js",
+  "types": "dist/types/components.d.ts",
+  "collection": "dist/collection/collection-manifest.json",
   "private": false,
   "version": "0.1.0",
   "description": "prototype for advanced-sheet-handler",
@@ -19,7 +19,8 @@
   },
   "dependencies": {
     "@stencil/core": "^0.6.1",
-    "@stencil/router": "latest"
+    "@stencil/router": "latest",
+    "ngl": "^2.0.0-dev.28"
   },
   "devDependencies": {
     "@stencil/dev-server": "latest",

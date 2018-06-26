@@ -12,8 +12,29 @@ div.sheetHandler ul.allDetHeader i.fa-angle-double-right{
 	display: none;
 }
 
-/*
-div.sheetHandler div.sheet-content div.nglView {
-	width:50%;
+div.sheetHandler div.row div.blocker {
+	display: none;
+	background-color: lightgrey;
+
 }
-*/
+
+div.sheetHandler div.row div.blocker i.fa-exclamation-triangle{
+    position:relative;
+    padding-top:50%; /* center the top of child elements vetically */
+    padding-bottom:50%;
+    /*text-align: center;*/
+
+}
+div.viewer {
+    display: block;
+    text-align: center;
+}
+
+div.viewer div.blocker i.fa-exclamation-triangle{
+    display: inline;
+    top: 50%;
+}
+
+div.sheetHandler div.nglView div.downloadPdb{
+	background-color: pink;
+}
