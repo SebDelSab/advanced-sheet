@@ -110,5 +110,10 @@ better rendering with bootstrap
 
 v0.3.0
 
-Bootstrap removed, a message is now appearing when a pdbfile is not present. The rendering should be better than in previous version.
+Bootstrap removed, a message is now appearing when a pdbfile is not available. The rendering should be better than in previous version.
+
+v0.4.0
+
+New functionnality : it is now possible to delete a sheet we don't want to have anymore
+
 

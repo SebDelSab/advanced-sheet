@@ -7,7 +7,7 @@ exports.config = {
 	],
 	copy: [
 	{src: "ngl"},
-	//{src: "pdb"}
+	{src: "pdb"}
 	]
 	
 };

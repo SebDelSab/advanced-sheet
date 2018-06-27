@@ -34,9 +34,49 @@ export class AdvancedSheetHandler{
 			}
 			let li = document.createElement('li');
 			let update = document.createElement('a');
-			update["data-toggle"]="tab"
-			li.className = "active "
-			update.text = data.detail.id
+			/*li.className = "nav-item";*/
+
+			/*
+			 *
+			 * Here the code to generate the cross allowing to remove detergent
+			 *
+			 */
+
+			let removeElem = document.createElement('span');
+			let cross = document.createElement('i');
+			cross.className ="fa fa-times fa-lg fa-pull-right";
+			removeElem.appendChild(cross);
+			removeElem.addEventListener('click',function(event){
+				event.stopPropagation()
+
+				let active = self.host.getElementsByClassName('active')[0];
+				let to_delete = event.target["parentNode"]["parentNode"]["parentNode"];
+				let right_arrow = self.host.getElementsByClassName("fa-angle-double-right")[0];
+				let nextDet = to_delete.nextSibling;
+				if(to_delete===active){
+					if(nextDet === right_arrow){
+						if(to_delete.previousSibling !==self.host.getElementsByClassName("fa-angle-double-left")[0]){
+							to_delete.previousSibling.children[0].click()		// a click call render function ()
+						}
+						else{
+							self.host.remove()
+						}
+					}
+					else{
+						to_delete.nextSibling.children[0].click()
+					}
+				}
+ 				to_delete.remove()															// we remove the li corresponding to the element we want to remove
+				delete self.catalog[event.target["parentNode"]["parentNode"].text]			// we also delete it in the catalog.
+			})
+
+
+
+
+
+			update["data-toggle"]="tab";
+			li.className = "active ";
+			update.text = data.detail.id;
 			update.addEventListener('click',function(event){
 				let blocker = self.host.getElementsByClassName('blocker')[0];
 				blocker["style"].display = "none";
@@ -50,8 +90,17 @@ export class AdvancedSheetHandler{
 				event.target["parentNode"]["classList"].add('active')
 
 			})
+			update.appendChild(removeElem);
 			li.appendChild(update)
 			to_update.appendChild(li)
+			let rightArrows = this.host.getElementsByClassName('allDetheader-right-arrow');
+			for (let i=0; i< rightArrows.length; i++){
+				rightArrows[i].remove()
+			}
+			let rightArrow = document.createElement('i');
+			rightArrow.className = "paginate nav-link fa fa-angle-double-right allDetheader-right-arrow"
+			to_update.appendChild(rightArrow)
+
 			this.catalog[data.detail.id]= data.detail.data;
 			this.catalog[data.detail.id]["pdbFile"]=data.detail.pdbFile			
 			this.catalog = {...this.catalog};
@@ -61,6 +110,7 @@ export class AdvancedSheetHandler{
 			sheet.data = {'data':[self.catalog[data.detail.text]]}
 		}
 		//this.createView(data.detail.pdbFile)
+
 	}
 
 	// Function that build the nglview 
@@ -106,8 +156,6 @@ export class AdvancedSheetHandler{
 		}
   	}
 
-
-
 	render(){
 
 		return(
@@ -115,7 +163,6 @@ export class AdvancedSheetHandler{
 			<div class="sheetHandler container">
 				<ul class="nav nav-tabs allDetHeader" >
 					<i class="paginate nav-link fa fa-angle-double-left allDetheader-left-arrow"></i>
-					<i class="paginate nav-link fa fa-angle-double-right allDetheader-right-arrow"></i>
 				</ul>
 				<div class="row">
 		    		<div class="tab-content allDetBody " id="DetContent">
