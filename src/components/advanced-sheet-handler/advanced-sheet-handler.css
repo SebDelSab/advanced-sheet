@@ -1,15 +1,15 @@
-div.sheetHandler ul.allDetHeader i.fa-angle-double-left{
-	font-size: 1.5em;
-    padding-top: 0.25em;
-    margin-right: 0.5em;
-	display: none;
+div.sheetHandler ul.allDetHeader li.li-right-arrow{
+    display: none;
 }
 
-div.sheetHandler ul.allDetHeader i.fa-angle-double-right{
-	font-size: 1.5em;
-    padding-top: 0.25em;
+div.sheetHandler ul.allDetHeader li.li-right-arrow a i.allDetheader-right-arrow{
+    font-size: 1.2em;
+    margin-right: 0.5em;
+}
+
+div.sheetHandler ul.allDetHeader li.li-left-arrow a i.allDetheader-left-arrow{
+	font-size: 1.2em;
     margin-left: 0.5em; 
-	display: none;
 }
 
 div.sheetHandler div.row div.blocker {
@@ -20,8 +20,6 @@ div.sheetHandler div.row div.blocker {
 
 div.sheetHandler div.row div.blocker i.fa-exclamation-triangle{
     position:relative;
-    padding-top:50%; /* center the top of child elements vetically */
-    padding-bottom:50%;
     /*text-align: center;*/
 
 }
@@ -39,6 +37,9 @@ div.sheetHandler div.nglView div.downloadPdb{
 	background-color: pink;
 }
 
+table div.sheetHandler ul.allDetHeader li{
+    font-size: 1.2em;
+}
 table div.sheetHandler ul.allDetHeader li span {
     color: grey;
     font-size: 0.75em;

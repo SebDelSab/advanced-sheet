@@ -14,33 +14,34 @@ import * as nglLib from 'ngl';
 })
 
 export class AdvancedSheetHandler{
-
+	@State() self = this;
 	@Prop() pdbFile: string;
 	@State() catalog = {};
 	@Prop() max_window = 3;
 	@Element() host: HTMLElement;
-	visible_start = 0;
+	@State() visible_start = 0;
 	@Prop() nglview: boolean;
+	@State() deleteOrClickNav: boolean = false;  // boolean to know if a sheet has been added
 
 
 	@Listen('dataDisplayed')
 	updateHandler(data){
+		//console.log("update")
 		let self = this;
 		let actives = this.host.getElementsByClassName('active');
 		let to_update = this.host.getElementsByClassName('allDetHeader')[0];
-		if(!this.catalog.hasOwnProperty(data.detail.id)){
+
+		if(!this.catalog.hasOwnProperty(data.detail.id)){									// if an element is not already in the catalog
+
 			for (let i=0; i< actives.length; i++){
-				actives[i].classList.remove('active')
+				actives[i].classList.remove('active')										// we remove the previous active class of another element
 			}
 			let li = document.createElement('li');
 			let update = document.createElement('a');
-			/*li.className = "nav-item";*/
 
-			/*
-			 *
-			 * Here the code to generate the cross allowing to remove detergent
-			 *
-			 */
+			/********************************************************************
+			 * Here the code to generate the cross allowing to remove detergent *
+			 ********************************************************************/
 
 			let removeElem = document.createElement('span');
 			let cross = document.createElement('i');
@@ -48,14 +49,16 @@ export class AdvancedSheetHandler{
 			removeElem.appendChild(cross);
 			removeElem.addEventListener('click',function(event){
 				event.stopPropagation()
-
+				self.deleteOrClickNav = true;
+				let navItems = self.host.getElementsByClassName('nav-item');
 				let active = self.host.getElementsByClassName('active')[0];
 				let to_delete = event.target["parentNode"]["parentNode"]["parentNode"];
-				let right_arrow = self.host.getElementsByClassName("fa-angle-double-right")[0];
+				let right_arrow = self.host.getElementsByClassName("li-right-arrow")[0];
+				let left_arrow = self.host.getElementsByClassName("li-left-arrow")[0];
 				let nextDet = to_delete.nextSibling;
 				if(to_delete===active){
 					if(nextDet === right_arrow){
-						if(to_delete.previousSibling !==self.host.getElementsByClassName("fa-angle-double-left")[0]){
+						if(to_delete.previousSibling !==self.host.getElementsByClassName("li-left-arrow")[0]){
 							to_delete.previousSibling.children[0].click()		// a click call render function ()
 						}
 						else{
@@ -63,17 +66,23 @@ export class AdvancedSheetHandler{
 						}
 					}
 					else{
+						//console.log(to_delete.nextSibling.children[0])
 						to_delete.nextSibling.children[0].click()
 					}
 				}
+				if(navItems[self.visible_start].parentNode.previousSibling!==left_arrow){
+					self.visible_start = self.visible_start - 1;
+					//console.log(self.visible_start)
+					navItems[self.visible_start]["style"].display="block";
+				}
  				to_delete.remove()															// we remove the li corresponding to the element we want to remove
 				delete self.catalog[event.target["parentNode"]["parentNode"].text]			// we also delete it in the catalog.
+				self.showItems()
+				self.arrowsHandler()
 			})
 
-
-
-
-
+			/********************************************************************/
+			
 			update["data-toggle"]="tab";
 			li.className = "active ";
 			update.text = data.detail.id;
@@ -88,29 +97,167 @@ export class AdvancedSheetHandler{
 				sheet.data = {'data':[self.catalog[update.text]]}
 				sheet.pdbFile = self.catalog[update.text]["pdbFile"];
 				event.target["parentNode"]["classList"].add('active')
-
+				self.deleteOrClickNav = true;
 			})
+
 			update.appendChild(removeElem);
+			update.classList.add("nav-item")
+			update.id = data.detail.id+"-link";
 			li.appendChild(update)
 			to_update.appendChild(li)
-			let rightArrows = this.host.getElementsByClassName('allDetheader-right-arrow');
-			for (let i=0; i< rightArrows.length; i++){
+
+
+			/*******************************************************************************
+			* Here the code to generate the arrows allowing to navigate inside the handler *
+			********************************************************************************/
+
+			/**************
+			* Left arrows *
+			***************/
+			let LeftArrowParentNode = this.host.getElementsByClassName("allDetHeader"); 
+			let leftArrows = this.host.getElementsByClassName('li-left-arrow');
+			for (let i=0; i< leftArrows.length; i++){									// Here we destroy all the left-arrows
+				leftArrows[i].remove()
+			}
+
+			let liLeftArrow = document.createElement('li');
+			liLeftArrow.classList.add('li-left-arrow');
+			let linkLeftArrow = document.createElement('a');
+			let leftArrow = document.createElement('i');
+			leftArrow.className = "paginate nav-link fa fa-angle-double-left allDetheader-left-arrow";			
+			linkLeftArrow.appendChild(leftArrow)
+			liLeftArrow.appendChild(linkLeftArrow)
+			let firstElem = LeftArrowParentNode[0].firstChild;
+			LeftArrowParentNode[0].insertBefore(liLeftArrow,firstElem)
+
+			linkLeftArrow.addEventListener("click",function(){
+
+				//console.log(active.firstChild)
+				//console.log(shown)
+				//console.log("click")
+				self.visible_start = self.visible_start-1;
+				//console.log(shown)
+				let active = self.host.getElementsByClassName('active')[0];
+				let shown = self.itemsShown()
+				if(active.firstChild === shown[shown.length -1]){
+					shown[shown.length-2].click()
+					self.showItems()	
+				}
+				//self.deleteOrClickNav = true;
+				liRightArrow["style"].display="inline";
+				self.showItems()
+				self.arrowsHandler()
+				//console.log(self.visible_start)
+
+			})
+
+			/***************/
+
+			/**************
+			* Right arrows *
+			***************/
+
+			let rightArrows = this.host.getElementsByClassName('li-right-arrow');
+			for (let i=0; i< rightArrows.length; i++){									// Here we destroy all the right-arrows
 				rightArrows[i].remove()
 			}
+			let liRightArrow = document.createElement('li');							// Creation of a right arrow
+			liRightArrow.classList.add('li-right-arrow');
+			let linkRightArrow = document.createElement('a');
 			let rightArrow = document.createElement('i');
-			rightArrow.className = "paginate nav-link fa fa-angle-double-right allDetheader-right-arrow"
-			to_update.appendChild(rightArrow)
+			rightArrow.className = "paginate nav-link fa fa-angle-double-right allDetheader-right-arrow";
+			linkRightArrow.appendChild(rightArrow)
+			liRightArrow.appendChild(linkRightArrow)
+			to_update.appendChild(liRightArrow)
+
+			linkRightArrow.addEventListener("click",function(){
+				self.visible_start = self.visible_start+1;
+				let active = self.host.getElementsByClassName('active')[0];
+				let shown = self.itemsShown()
+				//console.log(active.firstChild)
+				//console.log(shown[0])
+				if(active.firstChild === shown[0]){
+					shown[1].click()
+					self.showItems()
+				}
+				self.showItems()
+				self.arrowsHandler()
+			})
+
+
+			/**************/
+
 
 			this.catalog[data.detail.id]= data.detail.data;
 			this.catalog[data.detail.id]["pdbFile"]=data.detail.pdbFile			
 			this.catalog = {...this.catalog};
+			self.deleteOrClickNav = false;
+			this.showItems()
+			this.arrowsHandler()
 		}
+		/*else if(this.catalog.hasOwnProperty(data.detail.id)){
+			console.log("not a click")
+			console.log(this.visible_start)
+			this.deleteOrClickNav = true;
+			let navItems = this.host.getElementsByClassName('nav-item')
+			let index;
+			for(let i=0; i<navItems.length; i++){
+				if(navItems[i].textContent === data.detail.id){
+					index = i;
+				}
+			}
+			console.log(this.visible_start)
+			this.visible_start = index;
+			console.log(this.visible_start)
+			let navItem = document.getElementById(data.detail.id+"-link")
+			
+			navItem.click()
+			console.log(this.visible_start)
+			this.showItems()
+			this.arrowsHandler()
+			
+		}*/
+
 		else{
-			let sheet = document.getElementsByTagName('advanced-sheet')[0]
-			sheet.data = {'data':[self.catalog[data.detail.text]]}
+			let navItem = document.getElementById(data.detail.id+"-link")
+			navItem.click()
+
+			let itemShown = this.itemsShown()
+			//console.log(itemShown)
+			//console.log(itemShown[0])
+			let navItemShown = false;
+			for(let i=0;i<itemShown.length;i++){
+
+				if(navItem===itemShown[i]){
+					navItemShown = true;
+				}
+			}
+			if(!navItemShown){
+				let navItems = this.host.getElementsByClassName('nav-item')
+				let index;
+				for(let i=0; i<navItems.length; i++){
+					if(navItems[i].textContent === data.detail.id){
+						index = i;
+					}
+				}
+				this.visible_start = index;
+				this.showItems()
+				this.arrowsHandler()
+
+			}
+
+
+
+
+
+
+			//this.showItems()
+			//this.arrowsHandler()
+
+			//let sheet = document.getElementsByTagName('advanced-sheet')[0]
+			//sheet.data = {'data':[self.catalog[data.detail.text]]}
 		}
 		//this.createView(data.detail.pdbFile)
-
 	}
 
 	// Function that build the nglview 
@@ -156,13 +303,94 @@ export class AdvancedSheetHandler{
 		}
   	}
 
-	render(){
+	/*componentDidLoad() {
+		let liLeftArrow = this.host.getElementsByClassName('li-left-arrow')[0];
+		liLeftArrow.removeEventListener("click",this.leftArrowHandler)
+	}
+	*/
+	// leftArrowHandler = function(test){
+	//	console.log(test)
+			//event.stopPropagation()
+	//	console.log("toto")
+		// liLeftArrow.addEventListener("click",function(){
+		// 	console.log("toto")
+			
+		// 	
+			
 
+		// })
+		// console.log(this)			
+		// this.visible_start = this.visible_start-1;
+			
+		// }
+	showItems = function () {
+		if(Object.keys(this.catalog).length>this.max_window && this.deleteOrClickNav === false){
+			//console.log("aaaaaaa")
+			this.visible_start = this.visible_start + 1;
+		}
+		else if(Object.keys(this.catalog).length<=this.max_window){
+			this.visible_start = 0;
+		}
+		let navItems = this.host.getElementsByClassName('nav-item');
+
+		for(let i=0; i<navItems.length; i++){
+			if(i<this.visible_start ){	
+				navItems[i]["style"].display="none";
+			}
+			else if(i>this.visible_start + this.max_window - 1){
+				navItems[i]["style"].display="none";
+			}
+			else{
+				navItems[i]["style"].display="block";
+			}
+		}
+	}
+
+
+	itemsShown = function () {
+		let navItems = this.host.getElementsByClassName('nav-item');
+		let shown = [];																		// a variable giving the items that are shown
+		for(let i = 0; i<navItems.length; i++){
+			if(navItems[i]["style"].display==="block"){
+				shown.push(navItems[i])
+			}
+		}
+		return shown;
+	}
+
+	arrowsHandler = function () {
+		let navItems =this.host.getElementsByClassName('nav-item'); // Must be redeclared if in function
+		let liRightArrow = this.host.getElementsByClassName('li-right-arrow')[0];
+		let liLeftArrow = this.host.getElementsByClassName('li-left-arrow')[0];
+
+
+		if(Object.keys(this.catalog).length>this.max_window && this.visible_start>0){
+			liLeftArrow["style"].display = "inline";
+		}
+		else{
+			liLeftArrow["style"].display = "none";
+		}
+		if(this.visible_start === 0){
+			liLeftArrow["style"].display = "none";
+		}
+
+		let shown = this.itemsShown()
+		//console.log("controle")
+		if(shown[shown.length - 1] === navItems[navItems.length - 1]){
+			liRightArrow["style"].display = "none";
+		}
+		if(Object.keys(this.catalog).length>this.max_window && this.visible_start>=0 && shown[shown.length-1] !== navItems[navItems.length - 1]){
+			liRightArrow["style"].display = "inline";
+		}
+	}
+
+	render(){
+		//console.log("rerendering")
 		return(
 			<table>
 			<div class="sheetHandler container">
 				<ul class="nav nav-tabs allDetHeader" >
-					<i class="paginate nav-link fa fa-angle-double-left allDetheader-left-arrow"></i>
+
 				</ul>
 				<div class="row">
 		    		<div class="tab-content allDetBody " id="DetContent">

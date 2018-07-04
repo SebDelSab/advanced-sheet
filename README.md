@@ -116,4 +116,7 @@ v0.4.0
 
 New functionnality : it is now possible to delete a sheet we don't want to have anymore
 
+v0.5.0
 
+New functionnality : it is now possible to choose a number of window that must be shown at the same time. You can do it with the parameter max_window. 
+When the number of windows go over this limit, old windows are hidden and arrows are displayed in order to navigate into all the windows.   
