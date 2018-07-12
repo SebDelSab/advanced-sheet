@@ -32,7 +32,7 @@ Then you can paste this anywhere in your code where a HTML element can be placed
 
 ```html
 
-<advanced-sheet-handler></advanced-sheet-handler>
+<advanced-sheet-handler nglview max_window = 3 max_char=30></advanced-sheet-handler>
 
 ```
 
@@ -63,6 +63,15 @@ By modifying the advanced-sheet pdbFile property you can see your molecule thank
 #### nglview
 
 When adding this property inside the html element, allow the component to make a ngl representation of the .pdbFile that was passed to the component 
+
+#### max_window
+
+With this property you can define the number of tab you want to see at the same time. If the number of tab is larger than the total number of tab, arrows will appear allowing to navigate inside the tab that are shown and the tab that are hidden. By defalut, this property equals 3.
+
+#### max_char
+
+This property allows to choose a maximum number of characters inside a row of the data's table. If this value is exceeded, the row will be shortened with the max_char first characters and "..." after them. If you then hover your mouse on the shortened row, a tooltip with the complete row will appear. 
+
 ### Events
 
 Once the advanced-sheet is loaded, the event sheetLoaded is emitted. Once it is emited, you can pass data to the advanced-sheet component earlier.
@@ -110,7 +119,7 @@ better rendering with bootstrap
 
 v0.3.0
 
-Bootstrap removed, a message is now appearing when a pdbfile is not available. The rendering should be better than in previous version.
+A message is now appearing when a pdbfile is not available. The rendering should be better than in previous version.
 
 v0.4.0
 
@@ -119,4 +128,8 @@ New functionnality : it is now possible to delete a sheet we don't want to have 
 v0.5.0
 
 New functionnality : it is now possible to choose a number of window that must be shown at the same time. You can do it with the parameter max_window. 
-When the number of windows go over this limit, old windows are hidden and arrows are displayed in order to navigate into all the windows.   
+When the number of windows go over this limit, old windows are hidden and arrows are displayed in order to navigate into all the windows.  
+
+v0.6.0
+
+Addition of max_char property and the tooltip appearing when needed

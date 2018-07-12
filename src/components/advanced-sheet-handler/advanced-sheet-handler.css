@@ -39,8 +39,22 @@ div.sheetHandler div.nglView div.downloadPdb{
 
 table div.sheetHandler ul.allDetHeader li{
     font-size: 1.2em;
+    cursor: pointer;
 }
 table div.sheetHandler ul.allDetHeader li span {
     color: grey;
     font-size: 0.75em;
+}
+
+table div.shortentooltip {
+    position: absolute;
+    /*display: block;*/
+    visibility: hidden;
+    /*display: inline-block;*/
+    background-color: lightgrey;
+    border: 3px solid #73AD21;
+}
+
+table div.sheetHandler ul.allDetHeader {
+    width: 601px;
 }

@@ -38,6 +38,7 @@ declare global {
   }
   namespace JSXElements {
     export interface AdvancedSheetHandlerAttributes extends HTMLAttributes {
+      max_char?: number;
       max_window?: number;
       nglview?: boolean;
       pdbFile?: string;
@@ -71,6 +72,7 @@ declare global {
   namespace JSXElements {
     export interface AdvancedSheetAttributes extends HTMLAttributes {
       data?: object;
+      max_char?: any;
       pdbFile?: string;
     }
   }

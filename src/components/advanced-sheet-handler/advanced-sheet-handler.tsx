@@ -3,7 +3,7 @@ import {
 		Prop, 
 		Element, 
 		Listen, 
-		State, 
+		State,
 		} from '@stencil/core';
 
 import * as nglLib from 'ngl';
@@ -22,17 +22,17 @@ export class AdvancedSheetHandler{
 	@State() visible_start = 0;
 	@Prop() nglview: boolean;
 	@State() deleteOrClickNav: boolean = false;  // boolean to know if a sheet has been added
+	@Prop() max_char = 40;
 
 
 	@Listen('dataDisplayed')
 	updateHandler(data){
-		//console.log("update")
+		console.log("dataDisplayed")
 		let self = this;
 		let actives = this.host.getElementsByClassName('active');
 		let to_update = this.host.getElementsByClassName('allDetHeader')[0];
 
 		if(!this.catalog.hasOwnProperty(data.detail.id)){									// if an element is not already in the catalog
-
 			for (let i=0; i< actives.length; i++){
 				actives[i].classList.remove('active')										// we remove the previous active class of another element
 			}
@@ -131,23 +131,16 @@ export class AdvancedSheetHandler{
 			LeftArrowParentNode[0].insertBefore(liLeftArrow,firstElem)
 
 			linkLeftArrow.addEventListener("click",function(){
-
-				//console.log(active.firstChild)
-				//console.log(shown)
-				//console.log("click")
 				self.visible_start = self.visible_start-1;
-				//console.log(shown)
 				let active = self.host.getElementsByClassName('active')[0];
 				let shown = self.itemsShown()
 				if(active.firstChild === shown[shown.length -1]){
 					shown[shown.length-2].click()
 					self.showItems()	
 				}
-				//self.deleteOrClickNav = true;
 				liRightArrow["style"].display="inline";
 				self.showItems()
 				self.arrowsHandler()
-				//console.log(self.visible_start)
 
 			})
 
@@ -174,8 +167,6 @@ export class AdvancedSheetHandler{
 				self.visible_start = self.visible_start+1;
 				let active = self.host.getElementsByClassName('active')[0];
 				let shown = self.itemsShown()
-				//console.log(active.firstChild)
-				//console.log(shown[0])
 				if(active.firstChild === shown[0]){
 					shown[1].click()
 					self.showItems()
@@ -195,36 +186,12 @@ export class AdvancedSheetHandler{
 			this.showItems()
 			this.arrowsHandler()
 		}
-		/*else if(this.catalog.hasOwnProperty(data.detail.id)){
-			console.log("not a click")
-			console.log(this.visible_start)
-			this.deleteOrClickNav = true;
-			let navItems = this.host.getElementsByClassName('nav-item')
-			let index;
-			for(let i=0; i<navItems.length; i++){
-				if(navItems[i].textContent === data.detail.id){
-					index = i;
-				}
-			}
-			console.log(this.visible_start)
-			this.visible_start = index;
-			console.log(this.visible_start)
-			let navItem = document.getElementById(data.detail.id+"-link")
-			
-			navItem.click()
-			console.log(this.visible_start)
-			this.showItems()
-			this.arrowsHandler()
-			
-		}*/
 
 		else{
 			let navItem = document.getElementById(data.detail.id+"-link")
 			navItem.click()
 
 			let itemShown = this.itemsShown()
-			//console.log(itemShown)
-			//console.log(itemShown[0])
 			let navItemShown = false;
 			for(let i=0;i<itemShown.length;i++){
 
@@ -243,21 +210,9 @@ export class AdvancedSheetHandler{
 				this.visible_start = index;
 				this.showItems()
 				this.arrowsHandler()
-
 			}
-
-
-
-
-
-
-			//this.showItems()
-			//this.arrowsHandler()
-
-			//let sheet = document.getElementsByTagName('advanced-sheet')[0]
-			//sheet.data = {'data':[self.catalog[data.detail.text]]}
 		}
-		//this.createView(data.detail.pdbFile)
+
 	}
 
 	// Function that build the nglview 
@@ -267,13 +222,6 @@ export class AdvancedSheetHandler{
   		if(this.nglview){																								// if we chose to represent the view
   			let elem = this.host.getElementsByClassName("nglView")[0];
   			let blocker = self.host.getElementsByClassName('blocker')[0];
-  			//let nglView = self.host.getElementsByClassName('nglView')[0];
-  			//let dlpdb = self.host.getElementsByClassName('downloadPdb')[0];
-  			
-  			//dlLink.textContent = "test" 
-  			//console.log(data.detail.tableWidth)
-  			//elem["style"]="height:"+data.detail.tableHeight+"px;width: "+data.detail.tableWidth+"px;";
-  			//dlpdb["style"]="height:"+(20*(data.detail.tableHeight))/100+"px;width:200px;"
 			let canvas = elem.getElementsByTagName("canvas");
 			if(canvas.length === 0)																					// if we don't have a view yet
   				window["stage"] = new nglLib.Stage( elem, { backgroundColor: "lightgrey"} );						// we create it	
@@ -283,49 +231,50 @@ export class AdvancedSheetHandler{
   			window["stage"].removeAllComponents();
   			window["stage"].loadFile(data.detail.file)
   			.then(function(component){
-  				//elem["style"].display="none";
-  				//let dlLink = document.createElement("a");
+
   				blocker["style"].display = "none";
-  				//dlLink.textContent = "test";
-  				//dlpdb.appendChild(dlLink);
   				window["stage"].handleResize();  				
   				component.addRepresentation("ball+stick");
   				component.autoView();
-  				//elem["style"].display="inline";
   			})
   			.catch(function(error){
   				console.log(error)
   				elem["style"].display="none";
-  				//blocker["style"].display = "inline";
   				blocker["style"] = "display:inline-block;height:"+(80*(data.detail.tableHeight))/100+"px;width:"+data.detail.tableWidth+"px;"
   				blocker.children[0]["textContent"]="Warning ! : "+ data.detail.file + " doesn't exists"
   			});
 		}
+
   	}
 
-	/*componentDidLoad() {
-		let liLeftArrow = this.host.getElementsByClassName('li-left-arrow')[0];
-		liLeftArrow.removeEventListener("click",this.leftArrowHandler)
-	}
-	*/
-	// leftArrowHandler = function(test){
-	//	console.log(test)
-			//event.stopPropagation()
-	//	console.log("toto")
-		// liLeftArrow.addEventListener("click",function(){
-		// 	console.log("toto")
-			
-		// 	
-			
+	// @Listen('shortenReady')
+	// shortenTooltipable(data){
+		
+	// 	let tooltipable = this.host.getElementsByClassName("tooltipable");
+	// 	console.log("---------")
+	// 	console.dir(tooltipable)
+	// 	console.log(this.catalog)
+ //    	for (let i=0; i<tooltipable.length; i++){
+ //    		//let id = actives[0]
+ //    		//console.log(id.textContent) 
+ //    		//console.log(tooltipable[i])
+ //    		//console.log(this.catalog[data.detail][tooltipable[i].previousSibling.textContent])
+ //    		//console.log(tooltipable[i])
+ //    		tooltipable[i].innerHTML = this.catalog[data.detail][tooltipable[i].previousSibling.textContent].substr(0,this.max_char) + "...";
+ //    		//console.log(this.catalog[data.detail][tooltipable[i].previousSibling.textContent])
+ //    	}
+    	
+ //    	//console.log(this.catalog[data.detail])
+ //    	//data.detail
+	// }
+	
 
-		// })
-		// console.log(this)			
-		// this.visible_start = this.visible_start-1;
-			
-		// }
+
+
+
+
 	showItems = function () {
 		if(Object.keys(this.catalog).length>this.max_window && this.deleteOrClickNav === false){
-			//console.log("aaaaaaa")
 			this.visible_start = this.visible_start + 1;
 		}
 		else if(Object.keys(this.catalog).length<=this.max_window){
@@ -359,7 +308,7 @@ export class AdvancedSheetHandler{
 	}
 
 	arrowsHandler = function () {
-		let navItems =this.host.getElementsByClassName('nav-item'); // Must be redeclared if in function
+		let navItems =this.host.getElementsByClassName('nav-item');
 		let liRightArrow = this.host.getElementsByClassName('li-right-arrow')[0];
 		let liLeftArrow = this.host.getElementsByClassName('li-left-arrow')[0];
 
@@ -375,7 +324,6 @@ export class AdvancedSheetHandler{
 		}
 
 		let shown = this.itemsShown()
-		//console.log("controle")
 		if(shown[shown.length - 1] === navItems[navItems.length - 1]){
 			liRightArrow["style"].display = "none";
 		}
@@ -384,8 +332,10 @@ export class AdvancedSheetHandler{
 		}
 	}
 
+
+
+
 	render(){
-		//console.log("rerendering")
 		return(
 			<table>
 			<div class="sheetHandler container">
@@ -394,10 +344,9 @@ export class AdvancedSheetHandler{
 				</ul>
 				<div class="row">
 		    		<div class="tab-content allDetBody " id="DetContent">
-		    			<advanced-sheet></advanced-sheet>
+		    			<advanced-sheet max_char = {this.max_char} ></advanced-sheet>
 		    			<tr>
 		    				<div class="viewer">
-
 		   						<div class="nglView " ><div class="downloadPdb"></div><div class="detView"></div></div>
    								<div class="blocker "><i class="fa fa-exclamation-triangle"></i></div>
    							</div>
@@ -405,7 +354,10 @@ export class AdvancedSheetHandler{
    					</div>
    				</div>
     		</div>
+    		<div class = "shortentooltip"><p class="shortentooltiptext"></p></div>
+    		
     		</table>
+
 		);
 	}
 }
