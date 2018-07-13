@@ -47,7 +47,7 @@ table div.sheetHandler ul.allDetHeader li span {
 }
 
 table div.shortentooltip {
-    position: absolute;
+    position: fixed;
     /*display: block;*/
     visibility: hidden;
     /*display: inline-block;*/
